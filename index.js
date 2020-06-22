@@ -97,14 +97,14 @@ function handleMessage(sender_psid, received_message) {
     "text": "this is wonky now isnt it"
   }
 
-  // Check if the message contains text
-  // if (received_message.text) {    
+  Check if the message contains text
+  if (received_message.text) {    
 
-  //   // Create the payload for a basic text message
-  //   response = {
-  //     "text": 'You sent the message: "${received_message.text}". Now send me an image!'
-  //   }
-  // }
+    // Create the payload for a basic text message
+    response = {
+      "text": 'You sent the message: "${received_message.text}".'
+    }
+  }
 
   // Sends the response message
   callSendAPI(sender_psid, response); 
@@ -128,9 +128,6 @@ function callSendAPI(sender_psid, response) {
     "json": request_body
   }, (err, res, body) => {
     if (!err) {
-      console.log(err)
-      console.log(res)
-      console.log(body)
       console.log('message sent!')
     } else {
       console.error("Unable to send message:" + err);
