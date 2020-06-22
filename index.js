@@ -1,13 +1,25 @@
 'use strict';
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 // Imports dependencies and set up http server
 const
   express = require('express'),
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json()); // creates express http server
 
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN
+
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+
+// Index route
+app.get('/', function (req, res) {
+	res.send('Hello world, I am a chat bot')
+})
 
 // Creates the endpoint for our webhook 
 app.post('/webhook', (req, res) => {  
@@ -22,8 +34,13 @@ app.post('/webhook', (req, res) => {
   
         // Gets the message. entry.messaging is an array, but 
         // will only ever contain one message, so we get index 0
+        // Gets the body of the webhook event
         let webhook_event = entry.messaging[0];
         console.log(webhook_event);
+
+        // Get the sender PSID
+        let sender_psid = webhook_event.sender.id;
+        console.log('Sender PSID: ' + sender_psid);
       });
   
       // Returns a '200 OK' response to all requests
@@ -40,7 +57,7 @@ app.post('/webhook', (req, res) => {
 app.get('/webhook', (req, res) => {
 
     // Your verify token. Should be a random string.
-    let VERIFY_TOKEN = "jimmyfood"
+    let VERIFY_TOKEN = "<VERIFY_TOKEN>"
       
     // Parse the query params
     let mode = req.query['hub.mode'];
@@ -63,3 +80,18 @@ app.get('/webhook', (req, res) => {
       }
     }
   });
+
+// Handles messages events
+function handleMessage(sender_psid, received_message) {
+
+}
+
+// Handles messaging_postbacks events
+function handlePostback(sender_psid, received_postback) {
+
+}
+
+// Sends response messages via the Send API
+function callSendAPI(sender_psid, response) {
+  
+}
