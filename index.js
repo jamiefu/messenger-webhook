@@ -97,7 +97,7 @@ function handleMessage(sender_psid, received_message) {
     "text": "this is wonky now isnt it"
   }
 
-  Check if the message contains text
+  // Check if the message contains text
   if (received_message.text) {    
 
     // Create the payload for a basic text message
