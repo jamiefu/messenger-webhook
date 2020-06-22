@@ -93,14 +93,16 @@ app.get('/webhook', (req, res) => {
 
 function handleMessage(sender_psid, received_message) {
 
-  let response;
+  let response = {
+    "text": 'this is wonky now isnt it'
+  }
 
   // Check if the message contains text
   if (received_message.text) {    
 
     // Create the payload for a basic text message
     response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image!`
+      "text": 'You sent the message: "${received_message.text}". Now send me an image!'
     }
   }
 
@@ -111,13 +113,10 @@ function handleMessage(sender_psid, received_message) {
 function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
-    "messaging_type": "RESPONSE",
     "recipient": {
       "id": sender_psid
     },
-    "message": {
-      "text": response
-    }
+    "message": response
   }
 
   // Send the HTTP request to the Messenger Platform
