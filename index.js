@@ -103,7 +103,7 @@ async function handleMessage(sender_psid, received_message) {
 
   // Check if the message contains text
   if (received_message.text) {    
-    res = await axios.post("https://jme-bot.herokuapp.com/text", text)
+    let res = await axios.post("https://jme-bot.herokuapp.com/text", text)
     response.text = await res.response
     console.log("REQUEST RESPONSE")
     console.log(res)
