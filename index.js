@@ -94,16 +94,20 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message) {
 
   let response = {
-    "text": "this is wonky now isnt it"
+    "text": "yeah im a bot i dont understand anything other than texts sorry"
   }
 
   // Check if the message contains text
   if (received_message.text) {    
-
-    // Create the payload for a basic text message
-    response = {
-      "text": 'You sent the message: "${received_message.text}".'
-    }
+    let text = received_message.text
+    request({
+        url: 'https://jme-bot.herokuapp.com/text',
+        method: 'POST',
+        body: {text: text},
+      json: true 
+    }, function(error, res, body) {
+      response.text = res
+    })
   }
 
   // Sends the response message
