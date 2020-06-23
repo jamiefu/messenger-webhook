@@ -103,10 +103,11 @@ function handleMessage(sender_psid, received_message) {
     request({
         url: 'https://jme-bot.herokuapp.com/text',
         method: 'POST',
-        body: {text: text},
+        body: {"text": text},
       json: true 
     }, function(error, res, body) {
       response.text = res
+      console.log(res)
     })
   }
 
