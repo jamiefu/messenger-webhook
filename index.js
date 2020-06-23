@@ -106,13 +106,7 @@ function handleMessage(sender_psid, received_message) {
         body: {"text": text},
         json: true 
     }, function(error, res, body) {
-      console.log("ERROR")
-      console.log(error)
-      console.log("RESPONSE")
-      console.log(res)
-      console.log("BODY")
-      console.log(body)
-      response.text = res.body.response
+      response.text = body.response
     })
   }
 
@@ -129,7 +123,6 @@ function callSendAPI(sender_psid, response) {
     "message": response
   }
 
-  console.log(request_body)
   // Send the HTTP request to the Messenger Platform
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
