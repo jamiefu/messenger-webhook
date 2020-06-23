@@ -106,9 +106,14 @@ function handleMessage(sender_psid, received_message) {
         body: {"text": text},
         json: true 
     }, function(error, res, body) {
+      console.log("BODY RESPONSE")
+      console.log(body.response)
       response.text = body.response
     })
   }
+
+  console.log("OFFICIAL RESPONSE")
+  console.log(response)
 
   // Sends the response message
   callSendAPI(sender_psid, response); 
