@@ -11,6 +11,7 @@ const
   app = express().use(bodyParser.json()); // creates express http server
 
 const request = require('request');
+const axios = require("axios");
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN
@@ -91,25 +92,21 @@ app.get('/webhook', (req, res) => {
     }
   });
 
-function handleMessage(sender_psid, received_message) {
+async function handleMessage(sender_psid, received_message) {
 
   let response = {
     "text": "yeah im a bot i dont understand anything other than texts sorry"
   }
+  let text = {
+    "text": received_message.text
+  }
 
   // Check if the message contains text
   if (received_message.text) {    
-    let text = received_message.text
-    request({
-        url: 'https://jme-bot.herokuapp.com/text',
-        method: 'POST',
-        body: {"text": text},
-        json: true 
-    }, function(error, res, body) {
-      console.log("BODY RESPONSE")
-      console.log(body.response)
-      response.text = body.response
-    })
+    res = await axios.post("https://jme-bot.herokuapp.com/text", text)
+    response.text = await res.response
+    console.log("REQUEST RESPONSE")
+    console.log(res)
   }
 
   console.log("OFFICIAL RESPONSE")
